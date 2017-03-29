@@ -66,6 +66,9 @@ public class SecondEntry {
 
 		processLegendLine(legendLine);
 		
+		HashMap<String, String> newMap = processLegendLine(legendLine);
+
+
 		compressedText = readFile("D:/out.txt");
 
 		writeToFileClean("D:/out_clean", legendLine + text);
@@ -85,6 +88,7 @@ public class SecondEntry {
 		}
 
 		System.out.println(legendLine);
+
 		return null;
 
 	}
@@ -293,8 +297,6 @@ public class SecondEntry {
 		return words;
 	}
 
-
-
 	// This method sorts out the top 10 most frequent words.
 
 	public static void bubbleSort(ArrayList<Word> list, int o) {
@@ -309,7 +311,10 @@ public class SecondEntry {
 						list.set(i + 1, temp);
 					}
 				}
-			} 
+
+			}
+
 		}
+
 	}
 }
