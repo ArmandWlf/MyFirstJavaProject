@@ -27,7 +27,7 @@ public class SecondEntry {
 		}
 	}
 
-	public static void main(String[] args) {
+	public static <text> void main(String[] args) {
 		String filePath = "";
 		if (args.length > 0)
 			filePath = System.getProperty("user.dir") + "/" + args[0];
@@ -41,8 +41,8 @@ public class SecondEntry {
 		String[] words = getWords(text);
 
 		// Print out each word
-		for (String word : words)
-			System.out.println(word);
+		// for (String word : words)
+		// System.out.println("Test:" + word);
 
 		HashMap<String, Integer> wordCount = countWords(words);
 
@@ -55,7 +55,7 @@ public class SecondEntry {
 		}
 
 		String compressedText = compressText(text, topWords);
-		System.out.println(compressedText);
+		// System.out.println(compressedText);
 
 		// Legend
 		String legendLine = getLegend(topWords);
@@ -64,35 +64,55 @@ public class SecondEntry {
 
 		writeToFile("D:/out.txt", legendLine + "\n" + compressedText);
 
+		processLegendLine(legendLine);
+		
 		compressedText = readFile("D:/out.txt");
-		
-		writeToFileClean("D:/out_clean", text);
-		
-		
+
+		writeToFileClean("D:/out_clean", legendLine + text);
+
+	}
+
+	public static HashMap<String, String> processLegendLine(String legendLine) {
+
+		String[] splitLegend = legendLine.split(";");
+
+		for (String s : splitLegend) {
+			String[] newSplit = s.split("=");
+
+			for (String ss : newSplit) {
+				System.out.println(ss);
+			}
+		}
+
+		System.out.println(legendLine);
+		return null;
+
 	}
 	
+	
+	public static void writeToFileClean(String string, String string3) {
 
-		public static void writeToFileClean(String string, String string2) {
-	  try { 
-		  
-		  File file = new File("D:/out_clean.txt");
-
-			if (!file.exists()) {
+		File file = new File("D:/out-decompressed.txt");
+		if (!file.exists()) {
+			try {
 				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 
-			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+		}
+		FileWriter fw;
+		try {
+			fw = new FileWriter(file.getAbsoluteFile());
 			BufferedWriter bw = new BufferedWriter(fw);
-			bw.write(string2);
+			bw.write(string3);
 			bw.close();
-
-			System.out.println("PRINTED CLEAN IN NEW .TXT FILE");
-	  } catch (IOException e) { 
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
 
-	
+		System.out.println("PRINTED DECOMPRESSED IN NEW .TXT FILE");
+	}
 
 	public static void writeToFile(String string, String string2) {
 		try {
@@ -110,12 +130,12 @@ public class SecondEntry {
 
 			System.out.println("PRINTED IN NEW .TXT FILE");
 
-		} catch (IOException e) { 
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private static java.lang.String getLegend(List<Word> topWords) {
+	public static java.lang.String getLegend(List<Word> topWords) {
 
 		String line = "";
 
@@ -132,8 +152,7 @@ public class SecondEntry {
 
 	public static String getLegend(List<Word> topWords, java.lang.String replacementCode) {
 		String line = "";
-		// for()///
-		// String replacementCode = i + "=" + word;
+	   // String replacementCode = i + "=" + word;
 
 		line += replacementCode + ";";
 
@@ -274,6 +293,8 @@ public class SecondEntry {
 		return words;
 	}
 
+
+
 	// This method sorts out the top 10 most frequent words.
 
 	public static void bubbleSort(ArrayList<Word> list, int o) {
@@ -288,7 +309,7 @@ public class SecondEntry {
 						list.set(i + 1, temp);
 					}
 				}
-			}
+			} 
 		}
 	}
 }
